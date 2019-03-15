@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'frontpage.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
         primaryColorBrightness: Brightness.light,
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: FrontPage(),
     );
   }
 }
@@ -29,28 +30,28 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   initState(){
     super.initState();
-      images.add("assets/jackreacher.jpg");
-      images.add("assets/alita.jpg");
-      images.add("assets/creed.jpg");
-      images.add("assets/spiderman.jpg");
+    images.add("assets/jackreacher.jpg");
+    images.add("assets/alita.jpg");
+    images.add("assets/creed.jpg");
+    images.add("assets/spiderman.jpg");
   }
 
   Widget _buildAppBar(){
     return new AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0.0,
-        leading: new Icon(
-          Icons.local_movies,
-          size: 30.0,
+      leading: new Icon(
+        Icons.local_movies,
+        size: 30.0,
+        color: Colors.blueAccent,
+      ),
+      title: new Text(
+        "CineNav",
+        style: TextStyle(
           color: Colors.blueAccent,
+          fontSize: 20.0,
         ),
-        title: new Text(
-          "CineNav",
-          style: TextStyle(
-            color: Colors.blueAccent,
-            fontSize: 20.0,
-          ),
-        ),
+      ),
 
     );
   }
@@ -98,15 +99,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildCardStack(){
     return  new Card(
       elevation: 0.0,
-        child: new Container(
-          child: new Center(
-            child: images.isEmpty?
-                new Text("No more Movies to show",
-                  style: new TextStyle(fontSize: 20.0),
-                ):
-                new Image.asset(images.last),
-          ),
+      child: new Container(
+        child: new Center(
+          child: images.isEmpty?
+          new Text("No more Movies to show",
+            style: new TextStyle(fontSize: 20.0),
+          ):
+          new Image.asset(images.last),
         ),
+      ),
     );
   }
 
@@ -130,7 +131,7 @@ class _ProfileCardState extends State<ProfileCard>{
 
   Widget _buildBackground(){
     return new Image.asset(
-      'assets/ironman3.jpg'
+        'assets/ironman3.jpg'
     );
   }
 
@@ -202,4 +203,3 @@ class RoundIconButton extends StatelessWidget{
   }
 
 }
-// test - young
