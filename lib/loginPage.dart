@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage>{
   Widget build(BuildContext context){
     return new Scaffold(
       appBar: new AppBar(
-          title: new Text("Cine Nav Auth"),
+          title: new Text("Cine Nav"),
       ),
       body: new Container(
         padding: EdgeInsets.all(16.0),
