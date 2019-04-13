@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "843320942463",
+    "firebase_url": "https://cinenav-65573.firebaseio.com",
+    "project_id": "cinenav-65573",
+    "storage_bucket": "cinenav-65573.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843320942463:android:2c4ba435403542de",
+        "android_client_info": {
+          "package_name": "com.example.startupnamer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843320942463-hbalgi7egq8oo6g6ljr8mp229hpjdp6f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXiDOtrisRroljnM4ObTzK0UltMbs4ZT4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
