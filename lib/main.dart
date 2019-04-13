@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'frontpage.dart';
 import 'auth.dart';
 import 'rootPage.dart';
 

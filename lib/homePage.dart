@@ -1,6 +1,10 @@
 import "package:flutter/material.dart";
 import "auth.dart";
 import "package:flutter/cupertino.dart";
+import "recommendation.dart";
+import "ratingPage.dart";
+import "userRate.dart";
+
 
 class HomePage extends StatelessWidget {
   HomePage({this.auth, this.onSignedOut});
@@ -20,11 +24,24 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Cine Nav"),
+        backgroundColor: Colors.white70,
+        elevation: 0.0,
+        leading: new Icon(
+          Icons.local_movies,
+          size: 30.0,
+          color: Colors.blueAccent,
+        ),
+        title: new Text(
+          "CineNav",
+          style: TextStyle(
+            color: Colors.blueAccent,
+            fontSize: 20.0,
+          ),
+        ),
         actions: <Widget>[
           new FlatButton(
             child: new Text("Logout",
-                style: new TextStyle(fontSize: 17.0, color: Colors.white)),
+                style: new TextStyle(fontSize: 17.0, color: Colors.black)),
             onPressed: _signOut,
           ),
         ],
@@ -34,19 +51,23 @@ class HomePage extends StatelessWidget {
         child: Scaffold(
           body: TabBarView(
             children:[
-              Text("Home"),
-              Text("Rate"),
-              Text("News"),
-              Text("My Page"),
+              new Recommendation(),//Center(child: Text("Home")),
+              new RatingPage(),
+              Center(child: RatingHome(userRating("18",'',''))),
+              Center(child: Text("My Page")),
             ],
           ),
-          bottomNavigationBar: TabBar(
-            tabs:[
-              Tab(icon: Icon(Icons.home)),
-              Tab(icon: Icon(Icons.star)),
-              Tab(icon: Icon(Icons.new_releases)),
-              Tab(icon: Icon(Icons.account_circle)),
-            ],
+          bottomNavigationBar: Container(
+            color: Colors.white70,
+            child: TabBar(
+              indicatorColor: Colors.black,
+              tabs:[
+                Tab(icon: Icon(Icons.home)),
+                Tab(icon: Icon(Icons.star)),
+                Tab(icon: Icon(Icons.new_releases)),
+                Tab(icon: Icon(Icons.account_circle)),
+              ],
+            ),
           ),
         ),
       ),

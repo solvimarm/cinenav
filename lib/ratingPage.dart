@@ -96,7 +96,7 @@ class _RatingPageState extends State<RatingPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: _buildAppBar(),
+      //appBar: _buildAppBar(),
       body: _buildCardStack(),
       bottomNavigationBar: _buildBottomBar(),
     );
