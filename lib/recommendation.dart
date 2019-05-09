@@ -1,78 +1,72 @@
-import 'dart:convert';
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import "package:firebase_database/firebase_database.dart";
+import "auth.dart";
+
 
 class Recommendation extends StatefulWidget{
+  final BaseAuth auth;
+  Recommendation({this.auth});
   @override
   State<StatefulWidget> createState() => new _RecommendationState();
 }
 
-final recommendationReference = FirebaseDatabase.instance.reference().child('requests').child('18').child('getMovies').child("data"); // "18" going to change user id
-
 class _RecommendationState extends State<Recommendation>{
-  Map<dynamic, dynamic> Movies;
-  String PosterUrl;
+  final movieInformationReference = FirebaseDatabase.instance.reference().child('movies');
+  StreamSubscription<Event> _onRecommendationAddedSubscription;
+  Map<dynamic, dynamic> recommendationList = new Map();
+  List<String> recommendationKeys = new List();
 
-
-  void initState(){
-    super.initState();
-    initRecommendation();
-  }
-
-  initRecommendation() async {
-    await recommendationReference.once().then((DataSnapshot snapshot){
-      Movies = snapshot.value;
+  void _onRecommendationAdded(Event event){
+    setState(() {
+      recommendationList[event.snapshot.key] = event.snapshot.value;
+      recommendationKeys.add(event.snapshot.key);
     });
   }
 
   @override
+
+  initState(){
+    super.initState();
+
+    final recommendationReference = FirebaseDatabase.instance.reference().child('requests').child(widget.auth.getCidString()).child('getRecommendations').child("data");
+
+    _onRecommendationAddedSubscription = recommendationReference.onChildAdded.listen(_onRecommendationAdded);
+  }
+
   Widget build(BuildContext context){
-    return new ListView.builder(
-      itemCount: 5, //Movies.length,
-      itemBuilder: (BuildContext context, int index) {
-        initRecommendation();
-        return ListTile(
-          contentPadding: EdgeInsets.all(10.0),
-          title: new Text(Movies.keys.elementAt(index) + " : " + Movies.values.elementAt(index)),
-          trailing: FutureBuilder<Poster>(
-            future: fetchPoster("Ghost in the Shell"), // going to use trimmed Movies.values
-            builder: (context, snapshot){
-              if(snapshot.hasData){
-                return Image.network(
-                  snapshot.data.poster,
-                  fit: BoxFit.cover,
-                  height: 40.0,
-                  width: 40.0,
-                );
-              }else if(snapshot.hasError){
-                return Text("${snapshot.error}");
-              }
-            }
-          )
-        );
-      }
+    return ListView.builder(
+        itemCount: recommendationKeys.length, //Movies.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            contentPadding: EdgeInsets.all(10.0),
+            title: new Text(recommendationList[recommendationKeys[index]]["title"]),
+            trailing: ImageProvider(recommendationList[recommendationKeys[index]]["poster"]),
+          );
+        }
     );
   }
 }
 
-class Poster{
-  String poster;
-
-  Poster._({this.poster});
-
-  Poster.fromJson(Map<String, dynamic> json):
-    poster =json['Poster'];
-}
-
-Future<Poster> fetchPoster(String MovieTitle) async {
-  final response = await http.get('http://omdbapi.com/?apikey=a5b3ea45&t=$MovieTitle');
-
-  if(response.statusCode == 200){
-    return Poster.fromJson(json.decode(response.body));
-  }else{
-    throw Exception('Failed to load');
+class ImageProvider extends StatelessWidget{
+  final String ImageUrl;
+  ImageProvider(this.ImageUrl);
+  @override
+  Widget build(BuildContext context){
+    if(ImageUrl != null){
+      return Image.network(
+        ImageUrl,
+        height: 40.0,
+        width: 40.0,
+        fit: BoxFit.cover,
+      );
+    }else{
+      return Image.asset(
+        'assets/Nodata.png',
+        height: 40.0,
+        width: 40.0,
+        fit: BoxFit.cover,
+      );
+    }
   }
 }

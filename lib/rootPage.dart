@@ -24,6 +24,7 @@ class _RootPageState extends State<RootPage>{
     widget.auth.currentUser().then((userId){
       setState((){
         authStatus = userId == null ? AuthStatus.notSignedIn : AuthStatus.signedIn;
+        //print("in root page: $userId");
       });
     });
   }
